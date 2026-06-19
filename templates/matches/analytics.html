@@ -1,0 +1,237 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div style="padding:20px;">
+
+    <h1>📊 Cricket Analytics Dashboard</h1>
+
+    <hr>
+
+    <h2>🟠 Top Run Scorers</h2>
+
+    <table style="
+    width:100%;
+    border-collapse:collapse;
+    color:white;
+    margin-bottom:30px;
+    ">
+
+        <tr style="background:#1e293b;">
+
+            <th>Rank</th>
+            <th>Player</th>
+            <th>Runs</th>
+
+        </tr>
+
+        {% for player in top_run_scorers %}
+
+        <tr style="text-align:center;">
+
+            <td>{{ forloop.counter }}</td>
+
+            <td>{{ player.player__name }}</td>
+
+            <td>{{ player.total_runs }}</td>
+
+        </tr>
+
+        {% empty %}
+
+        <tr>
+
+            <td colspan="3">
+                No Run Data Available
+            </td>
+
+        </tr>
+
+        {% endfor %}
+
+    </table>
+
+    <hr>
+
+    <h2>🟣 Top Wicket Takers</h2>
+
+    <table style="
+    width:100%;
+    border-collapse:collapse;
+    color:white;
+    margin-bottom:30px;
+    ">
+
+        <tr style="background:#1e293b;">
+
+            <th>Rank</th>
+            <th>Player</th>
+            <th>Wickets</th>
+
+        </tr>
+
+        {% for player in top_wicket_takers %}
+
+        <tr style="text-align:center;">
+
+            <td>{{ forloop.counter }}</td>
+
+            <td>{{ player.player__name }}</td>
+
+            <td>{{ player.total_wickets }}</td>
+
+        </tr>
+
+        {% empty %}
+
+        <tr>
+
+            <td colspan="3">
+                No Wicket Data Available
+            </td>
+
+        </tr>
+
+        {% endfor %}
+
+    </table>
+
+    <hr>
+
+    <h2>📈 Top Run Scorers Chart</h2>
+
+    <canvas
+        id="runsChart"
+        width="400"
+        height="150">
+    </canvas>
+
+    <hr>
+
+    <h2>📉 Top Wicket Takers Chart</h2>
+
+    <canvas
+        id="wicketsChart"
+        width="400"
+        height="150">
+    </canvas>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+
+const runLabels =
+JSON.parse(
+'{{ run_labels|escapejs }}'
+);
+
+const runData =
+JSON.parse(
+'{{ run_data|escapejs }}'
+);
+
+const wicketLabels =
+JSON.parse(
+'{{ wicket_labels|escapejs }}'
+);
+
+const wicketData =
+JSON.parse(
+'{{ wicket_data|escapejs }}'
+);
+
+const runCtx =
+document.getElementById(
+'runsChart'
+);
+
+new Chart(
+runCtx,
+{
+    type: 'bar',
+
+    data: {
+
+        labels: runLabels,
+
+        datasets: [{
+
+            label: 'Runs',
+
+            data: runData,
+
+            borderWidth: 1
+
+        }]
+
+    },
+
+    options: {
+
+        responsive: true,
+
+        scales: {
+
+            y: {
+
+                beginAtZero: true
+
+            }
+
+        }
+
+    }
+
+}
+);
+
+const wicketCtx =
+document.getElementById(
+'wicketsChart'
+);
+
+new Chart(
+wicketCtx,
+{
+    type: 'bar',
+
+    data: {
+
+        labels: wicketLabels,
+
+        datasets: [{
+
+            label: 'Wickets',
+
+            data: wicketData,
+
+            borderWidth: 1
+
+        }]
+
+    },
+
+    options: {
+
+        responsive: true,
+
+        scales: {
+
+            y: {
+
+                beginAtZero: true
+
+            }
+
+        }
+
+    }
+
+}
+);
+
+</script>
+
+{% endblock %}

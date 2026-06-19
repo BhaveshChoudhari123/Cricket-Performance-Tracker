@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>🏆 Completed Matches</h1>
+
+<hr>
+
+{% for match in matches %}
+
+<div style="
+background:#111827;
+padding:20px;
+margin-bottom:20px;
+border-radius:15px;
+">
+
+<h2>
+
+{{ match.name }}
+
+</h2>
+
+<p>
+
+<strong>Result:</strong>
+
+{{ match.status }}
+
+</p>
+
+<p>
+
+<strong>Venue:</strong>
+
+{{ match.venue }}
+
+</p>
+
+<p>
+
+<strong>Date:</strong>
+
+{{ match.date }}
+
+</p>
+
+<a
+href="{% url 'match_detail' match.id %}"
+class="btn btn-success">
+
+View Scorecard
+
+</a>
+
+</div>
+
+{% empty %}
+
+<h3>No Completed Matches Found</h3>
+
+{% endfor %}
+
+{% endblock %}

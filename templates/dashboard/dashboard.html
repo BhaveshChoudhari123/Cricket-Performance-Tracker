@@ -1,0 +1,166 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Dashboard</h1>
+
+<a
+href="{% url 'team_rankings' %}"
+class="btn btn-info">
+
+🏆 Team Rankings
+
+</a>
+
+<a
+href="{% url 'points_table' %}"
+class="btn btn-success">
+
+🏆 View Points Table
+
+</a>
+
+<a
+href="{% url 'completed_matches' %}"
+class="btn btn-danger">
+
+🏆 Completed Matches
+
+</a>
+
+<hr>
+
+<div class="row">
+
+    <div class="col-md-3">
+        <div class="card dashboard-card">
+            <h4>Total Players</h4>
+            <h2>{{ total_players }}</h2>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card dashboard-card">
+            <h4>Total Matches</h4>
+            <h2>{{ total_matches }}</h2>
+        </div>
+    </div>
+
+</div>
+
+<a
+href="{% url 'player_rankings' %}"
+class="btn btn-warning">
+
+🏏 Player Rankings
+
+</a>
+
+<hr>
+
+<h2>🏏 Live Matches</h2>
+
+{% if live_matches %}
+
+    {% for match in live_matches %}
+
+    <div style="
+        background:#111827;
+        padding:20px;
+        margin-top:15px;
+        border-radius:12px;
+        border:1px solid #374151;
+    ">
+
+        <h3>
+            <a href="{% url 'match_detail' match.id %}"
+               style="
+               color:white;
+               text-decoration:none;
+               ">
+                {{ match.name }}
+            </a>
+        </h3>
+
+        <p>
+            <strong>Status:</strong>
+            {{ match.status }}
+        </p>
+
+        <p>
+            <strong>Venue:</strong>
+            {{ match.venue }}
+        </p>
+
+        <p>
+            <strong>Date:</strong>
+            {{ match.date }}
+        </p>
+
+        <p>
+            <strong>Match Type:</strong>
+            {{ match.matchType }}
+        </p>
+
+        <p>
+            <strong>Teams:</strong>
+
+            {% for team in match.teams %}
+                {{ team }}
+                {% if not forloop.last %}
+                    vs
+                {% endif %}
+            {% endfor %}
+        </p>
+
+        {% if match.score %}
+
+        <hr>
+
+        <h5>Scoreboard</h5>
+
+        {% for inning in match.score %}
+
+            <div style="
+                background:#1f2937;
+                padding:10px;
+                margin-bottom:10px;
+                border-radius:8px;
+            ">
+
+                <strong>{{ inning.inning }}</strong>
+
+                <br>
+
+                Runs:
+                {{ inning.r }}/{{ inning.w }}
+
+                <br>
+
+                Overs:
+                {{ inning.o }}
+
+            </div>
+
+        {% endfor %}
+
+        {% endif %}
+
+        <a href="{% url 'match_detail' match.id %}"
+           class="btn btn-primary">
+
+            View Full Details
+
+        </a>
+
+    </div>
+
+    {% endfor %}
+
+{% else %}
+
+    <p>No Live Matches Available</p>
+
+{% endif %}
+
+{% endblock %}

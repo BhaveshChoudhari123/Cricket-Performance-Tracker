@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>📅 Upcoming Matches</h1>
+
+<hr>
+
+{% for match in matches %}
+
+<div style="
+background:#111827;
+padding:20px;
+margin-bottom:15px;
+border-radius:12px;
+">
+
+    <h2>
+
+        {{ match.team1.short_name }}
+
+        VS
+
+        {{ match.team2.short_name }}
+
+    </h2>
+
+    <p>
+
+        Venue:
+        {{ match.venue }}
+
+    </p>
+
+    <p>
+
+        Date:
+        {{ match.match_date }}
+
+    </p>
+
+</div>
+
+{% empty %}
+
+<h3>No Upcoming Matches</h3>
+
+{% endfor %}
+
+{% endblock %}

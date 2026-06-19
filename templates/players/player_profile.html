@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div
+style="
+background:#111827;
+padding:30px;
+border-radius:15px;
+">
+
+    <h1>
+
+        {{ player.name }}
+
+    </h1>
+
+    <p>
+
+        Age:
+        {{ player.age }}
+
+    </p>
+
+    <p>
+
+        Team:
+        {{ player.team }}
+
+    </p>
+
+    <p>
+
+        Role:
+        {{ player.role }}
+
+    </p>
+
+</div>
+
+<hr>
+
+<div
+style="
+background:#0f172a;
+padding:20px;
+border-radius:15px;
+">
+
+    <h2>
+
+        Career Statistics
+
+    </h2>
+
+    <h3>
+
+        Total Runs:
+        {{ total_runs }}
+
+    </h3>
+
+    <h3>
+
+        Total Wickets:
+        {{ total_wickets }}
+
+    </h3>
+
+</div>
+
+<hr>
+
+<h2>
+
+Recent Batting Records
+
+</h2>
+
+<table
+style="
+width:100%;
+color:white;
+">
+
+<tr>
+
+    <th>Runs</th>
+    <th>Balls</th>
+    <th>4s</th>
+    <th>6s</th>
+
+</tr>
+
+{% for score in batting %}
+
+<tr>
+
+    <td>{{ score.runs }}</td>
+
+    <td>{{ score.balls }}</td>
+
+    <td>{{ score.fours }}</td>
+
+    <td>{{ score.sixes }}</td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+{% endblock %}

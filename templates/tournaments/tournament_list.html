@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>🏆 Tournaments</h1>
+
+<a
+href="{% url 'add_tournament' %}"
+class="btn btn-success">
+
+➕ Add Tournament
+
+</a>
+
+<hr>
+
+{% for tournament in tournaments %}
+
+<div class="card p-3 mb-3">
+
+    <h3>{{ tournament.name }}</h3>
+
+    <p>
+        Season:
+        {{ tournament.season }}
+    </p>
+
+</div>
+
+{% empty %}
+
+<p>No tournaments available.</p>
+
+{% endfor %}
+
+{% endblock %}

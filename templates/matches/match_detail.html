@@ -1,0 +1,451 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="match-detail">
+
+    <!-- MATCH HEADER -->
+
+    <div style="
+    background:#111827;
+    padding:25px;
+    border-radius:15px;
+    margin-bottom:25px;
+    ">
+
+        <h2>🏆 {{ match.tournament }}</h2>
+
+        {% for innings in innings_list %}
+
+        <h1>
+
+            {{ innings.batting_team.short_name }}
+
+            {{ innings.runs }}/{{ innings.wickets }}
+
+            ({{ innings.overs }})
+
+        </h1>
+
+        {% endfor %}
+
+        {% if runs_needed %}
+
+        <h3>
+
+            Need {{ runs_needed }} Runs To Win
+
+        </h3>
+
+        {% endif %}
+
+    </div>
+
+    <!-- MATCH TITLE -->
+
+    <h1>
+
+    <a href="{% url 'team_detail' match.team1.id %}"
+       style="color:white;text-decoration:none;">
+
+        {{ match.team1.short_name }}
+
+    </a>
+
+    VS
+
+    <a href="{% url 'team_detail' match.team2.id %}"
+       style="color:white;text-decoration:none;">
+
+        {{ match.team2.short_name }}
+
+    </a>
+
+</h1>
+
+    <hr>
+
+    <!-- TABS -->
+
+    <div class="tabs-container">
+
+        <button onclick="showTab('live')">
+
+            Live
+
+        </button>
+
+        <button onclick="showTab('scorecard')">
+
+            Scorecard
+
+        </button>
+
+        <button onclick="showTab('commentary')">
+
+            Commentary
+
+        </button>
+
+        <button onclick="showTab('points')">
+
+            Points Table
+
+        </button>
+
+        <button onclick="showTab('leaders')">
+            Leaders
+        </button>
+
+    </div>
+
+    <!-- LIVE TAB -->
+
+    <div id="live" class="tab-content">
+
+        <h2>Live Match Summary</h2>
+
+        {% for innings in innings_list %}
+
+        <div style="
+        background:#0f172a;
+        padding:20px;
+        margin-top:15px;
+        border-radius:12px;
+        border:1px solid #334155;
+        ">
+
+            <h2>
+
+                {{ innings.batting_team.short_name }}
+
+                {{ innings.runs }}/{{ innings.wickets }}
+
+                ({{ innings.overs }})
+
+            </h2>
+
+        </div>
+
+        {% endfor %}
+
+        {% if target %}
+
+        <div style="
+        margin-top:20px;
+        background:#111827;
+        padding:20px;
+        border-radius:12px;
+        ">
+
+            <h3>
+
+                Target :
+                {{ target }}
+
+            </h3>
+
+            <h3>
+
+                Runs Needed :
+                {{ runs_needed }}
+
+            </h3>
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+    <!-- SCORECARD TAB -->
+
+    <div id="scorecard"
+         class="tab-content"
+         style="display:none;">
+
+        <h2>Batting Scorecard</h2>
+
+        <table
+        style="
+        width:100%;
+        border-collapse:collapse;
+        color:white;
+        margin-top:20px;
+        ">
+
+            <tr style="background:#1e293b;">
+
+                <th>Player</th>
+                <th>Runs</th>
+                <th>Balls</th>
+                <th>4s</th>
+                <th>6s</th>
+                <th>Strike Rate</th>
+
+            </tr>
+
+            {% for bat in batting_scores %}
+
+            <tr style="
+            text-align:center;
+            border-bottom:1px solid #334155;
+            ">
+
+                <a href="{% url 'player_profile' bat.player.id %}">
+                         {{ bat.player.name }}
+                </a>
+
+                <td>{{ bat.runs }}</td>
+
+                <td>{{ bat.balls }}</td>
+
+                <td>{{ bat.fours }}</td>
+
+                <td>{{ bat.sixes }}</td>
+
+                <td>{{ bat.strike_rate }}</td>
+
+            </tr>
+
+            {% empty %}
+
+            <tr>
+
+                <td colspan="6">
+
+                    No Batting Data
+
+                </td>
+
+            </tr>
+
+            {% endfor %}
+
+        </table>
+
+        <hr style="margin-top:40px;">
+
+        <h2>Bowling Scorecard</h2>
+
+        <table
+        style="
+        width:100%;
+        border-collapse:collapse;
+        color:white;
+        margin-top:20px;
+        ">
+
+            <tr style="background:#1e293b;">
+
+                <th>Bowler</th>
+                <th>Overs</th>
+                <th>Maidens</th>
+                <th>Runs</th>
+                <th>Wickets</th>
+                <th>Economy</th>
+
+            </tr>
+
+            {% for bowl in bowling_scores %}
+
+            <tr style="
+            text-align:center;
+            border-bottom:1px solid #334155;
+            ">
+
+                <a href="{% url 'player_profile' bowl.player.id %}">
+                         {{ bowl.player.name }}
+                </a>
+
+                <td>{{ bowl.overs }}</td>
+
+                <td>{{ bowl.maidens }}</td>
+
+                <td>{{ bowl.runs }}</td>
+
+                <td>{{ bowl.wickets }}</td>
+
+                <td>{{ bowl.economy }}</td>
+
+            </tr>
+
+            {% empty %}
+
+            <tr>
+
+                <td colspan="6">
+
+                    No Bowling Data
+
+                </td>
+
+            </tr>
+
+            {% endfor %}
+
+        </table>
+
+    </div>
+
+    <!-- COMMENTARY TAB -->
+
+    <div id="commentary"
+         class="tab-content"
+         style="display:none;">
+
+        <h2>Live Commentary</h2>
+
+        {% for com in commentary %}
+
+        <div style="
+        background:#111827;
+        padding:15px;
+        margin-bottom:15px;
+        border-radius:10px;
+        border-left:5px solid orange;
+        ">
+
+            <h4>
+
+                {{ com.over }}
+
+                -
+
+                {{ com.event }}
+
+            </h4>
+
+            <p>
+
+                {{ com.description }}
+
+            </p>
+
+        </div>
+
+        {% empty %}
+
+        <p>No Commentary Available.</p>
+
+        {% endfor %}
+
+    </div>
+
+    <!-- POINTS TABLE TAB -->
+
+    <div
+id="leaders"
+class="tab-content"
+style="display:none;"
+>
+
+    <h2>🟠 Orange Cap</h2>
+
+    <table
+    style="
+    width:100%;
+    color:white;
+    border-collapse:collapse;
+    margin-bottom:40px;
+    ">
+
+        <tr style="background:#1e293b;">
+
+            <th>Rank</th>
+            <th>Player</th>
+            <th>Runs</th>
+
+        </tr>
+
+        {% for player in orange_cap %}
+
+        <tr style="text-align:center;">
+
+            <td>{{ forloop.counter }}</td>
+
+            <td>
+                {{ player.player__name }}
+            </td>
+
+            <td>
+                {{ player.total_runs }}
+            </td>
+
+        </tr>
+
+        {% endfor %}
+
+    </table>
+
+    <h2>🟣 Purple Cap</h2>
+
+    <table
+    style="
+    width:100%;
+    color:white;
+    border-collapse:collapse;
+    ">
+
+        <tr style="background:#1e293b;">
+
+            <th>Rank</th>
+            <th>Player</th>
+            <th>Wickets</th>
+
+        </tr>
+
+        {% for player in purple_cap %}
+
+        <tr style="text-align:center;">
+
+            <td>{{ forloop.counter }}</td>
+
+            <td>
+                {{ player.player__name }}
+            </td>
+
+            <td>
+                {{ player.total_wickets }}
+            </td>
+
+        </tr>
+
+        {% endfor %}
+
+    </table>
+
+</div>
+
+</div>
+
+<script>
+
+function showTab(tabId){
+
+    const tabs =
+    document.querySelectorAll('.tab-content');
+
+    tabs.forEach(tab => {
+
+        tab.style.display = 'none';
+
+    });
+
+    document
+    .getElementById(tabId)
+    .style.display = 'block';
+
+}
+
+document.addEventListener(
+'DOMContentLoaded',
+function(){
+
+    showTab('live');
+
+});
+
+</script>
+
+{% endblock %}

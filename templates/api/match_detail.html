@@ -1,0 +1,347 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div style="
+background:#111827;
+padding:25px;
+border-radius:15px;
+">
+
+<!-- TEAM LOGOS -->
+
+<div style="
+display:flex;
+justify-content:center;
+align-items:center;
+gap:40px;
+margin-bottom:30px;
+">
+
+{% for team in match.teamInfo %}
+
+<div style="text-align:center;">
+
+    <img
+    src="{{ team.img }}"
+    width="80"
+    height="80"
+    alt="{{ team.name }}">
+
+    <h3>{{ team.shortname }}</h3>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+<!-- MATCH NAME -->
+
+<h1 style="text-align:center;">
+    {{ match.name }}
+</h1>
+
+<!-- MATCH RESULT CARD -->
+
+<div style="
+background:#16a34a;
+padding:15px;
+border-radius:10px;
+margin-bottom:20px;
+text-align:center;
+">
+
+<h3>
+{{ match.status }}
+</h3>
+
+</div>
+
+<!-- MATCH SUMMARY -->
+
+<div style="
+background:#0f172a;
+padding:20px;
+border-radius:12px;
+margin:20px 0;
+">
+
+<h2>📋 Match Summary</h2>
+
+<p><strong>Status:</strong> {{ match.status }}</p>
+<p><strong>Venue:</strong> {{ match.venue }}</p>
+<p><strong>Date:</strong> {{ match.date }}</p>
+<p><strong>Format:</strong> {{ match.matchType|upper }}</p>
+
+</div>
+
+<!-- MATCH PROGRESS -->
+
+<div style="
+background:#1f2937;
+padding:20px;
+border-radius:12px;
+margin-bottom:20px;
+">
+
+<h2>📈 Match Progress</h2>
+
+{% if match.matchStarted %}
+<p>✅ Match Started</p>
+{% else %}
+<p>⏳ Match Yet To Start</p>
+{% endif %}
+
+{% if match.matchEnded %}
+<p>🏆 Match Finished</p>
+{% else %}
+<p>🏏 Match In Progress</p>
+{% endif %}
+
+</div>
+
+<!-- TEAM INFORMATION -->
+
+<div style="
+background:#111827;
+padding:20px;
+border-radius:12px;
+border:1px solid #374151;
+margin-bottom:20px;
+">
+
+<h2>👥 Teams</h2>
+
+<div style="
+display:flex;
+justify-content:space-around;
+flex-wrap:wrap;
+">
+
+{% for team in match.teamInfo %}
+
+<div style="
+text-align:center;
+margin:10px;
+">
+
+<img
+src="{{ team.img }}"
+width="70"
+height="70"
+alt="{{ team.name }}">
+
+<h4>{{ team.name }}</h4>
+
+<p>{{ team.shortname }}</p>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+</div>
+
+<!-- AI PREDICTION -->
+
+<div style="
+background:#7c3aed;
+padding:20px;
+border-radius:12px;
+margin-bottom:20px;
+">
+
+<h2>🤖 AI Match Predictor</h2>
+
+<h3>{{ prediction }}</h3>
+
+</div>
+
+<!-- WIN PROBABILITY -->
+
+<div style="
+background:#1f2937;
+padding:20px;
+border-radius:12px;
+margin-bottom:20px;
+">
+
+<h2>📊 Win Probability</h2>
+
+<p>
+{{ match.teams.0 }}
+:
+<strong>{{ team1_probability }}%</strong>
+</p>
+
+<p>
+{{ match.teams.1 }}
+:
+<strong>{{ team2_probability }}%</strong>
+</p>
+
+</div>
+
+<!-- LIVE SCOREBOARD -->
+
+<h2>🏏 Live Scoreboard</h2>
+
+{% if match.score %}
+
+{% for inning in match.score %}
+
+<div style="
+background:#1f2937;
+padding:15px;
+margin-bottom:15px;
+border-radius:10px;
+">
+
+<h4>{{ inning.inning }}</h4>
+
+<h2>
+{{ inning.r }}/{{ inning.w }}
+</h2>
+
+<p>
+<strong>Overs:</strong>
+{{ inning.o }}
+</p>
+
+</div>
+
+{% endfor %}
+
+{% else %}
+
+<p>No Score Available</p>
+
+{% endif %}
+
+<hr>
+
+<!-- BATTING SCORECARD -->
+
+{% for innings in all_scorecards %}
+
+<hr>
+
+<h2>
+🏏 {{ innings.inning }}
+</h2>
+
+<h3>Batting</h3>
+
+<table class="table table-dark table-striped">
+
+<tr>
+<th>Player</th>
+<th>Dismissal</th>
+<th>Runs</th>
+<th>Balls</th>
+<th>4s</th>
+<th>6s</th>
+<th>SR</th>
+</tr>
+
+{% for player in innings.batting %}
+
+<tr>
+
+<td>{{ player.batsman.name }}</td>
+
+<td>{{ player.dismissal }}</td>
+
+<td>{{ player.r }}</td>
+
+<td>{{ player.b }}</td>
+
+<td>{{ player.fours }}</td>
+
+<td>{{ player.sixes }}</td>
+
+<td>{{ player.sr }}</td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+<h3>Bowling</h3>
+
+<table class="table table-dark table-striped">
+
+<tr>
+<th>Bowler</th>
+<th>Overs</th>
+<th>Runs</th>
+<th>Wickets</th>
+</tr>
+
+{% for player in innings.bowling %}
+
+<tr>
+
+<td>{{ player.bowler.name }}</td>
+
+<td>{{ player.o }}</td>
+
+<td>{{ player.r }}</td>
+
+<td>{{ player.w }}</td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+{% endfor %}
+
+<hr>
+
+<!-- MATCH DETAILS -->
+
+<h3>📍 Venue</h3>
+<p>{{ match.venue }}</p>
+
+<h3>📅 Date</h3>
+<p>{{ match.date }}</p>
+
+<h3>🏏 Match Type</h3>
+<p>{{ match.matchType }}</p>
+
+<h3>📢 Status</h3>
+<p>{{ match.status }}</p>
+
+<hr>
+
+<!-- TEAM LIST -->
+
+<h2>📋 Team List</h2>
+
+<ul>
+
+{% for team in match.teams %}
+
+<li>{{ team }}</li>
+
+{% endfor %}
+
+</ul>
+
+<hr>
+
+<a href="/"
+class="btn btn-primary">
+
+🏠 Back To Dashboard
+
+</a>
+
+</div>
+
+{% endblock %}

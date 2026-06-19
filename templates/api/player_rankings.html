@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container">
+
+    <h1>🏏 Player Rankings</h1>
+
+    <hr>
+
+    <h2>🟠 Top Run Scorers</h2>
+
+    <table class="table table-dark table-striped">
+
+        <thead>
+
+            <tr>
+
+                <th>Rank</th>
+
+                <th>Player</th>
+
+                <th>Runs</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            {% for player in top_batsmen %}
+
+            <tr>
+
+                <td>{{ forloop.counter }}</td>
+
+                <td>{{ player.name }}</td>
+
+                <td>{{ player.runs }}</td>
+
+            </tr>
+
+            {% endfor %}
+
+        </tbody>
+
+    </table>
+
+    <hr>
+
+    <h2>🟣 Top Wicket Takers</h2>
+
+    <table class="table table-dark table-striped">
+
+        <thead>
+
+            <tr>
+
+                <th>Rank</th>
+
+                <th>Player</th>
+
+                <th>Wickets</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            {% for player in top_bowlers %}
+
+            <tr>
+
+                <td>{{ forloop.counter }}</td>
+
+                <td>{{ player.name }}</td>
+
+                <td>{{ player.wickets }}</td>
+
+            </tr>
+
+            {% endfor %}
+
+        </tbody>
+
+    </table>
+
+    <hr>
+
+    <a
+    href="/"
+    class="btn btn-primary">
+
+        🏠 Back To Dashboard
+
+    </a>
+
+</div>
+
+{% endblock %}

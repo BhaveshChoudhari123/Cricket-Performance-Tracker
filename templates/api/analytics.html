@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>📊 Cricket Analytics Dashboard</h1>
+
+<hr>
+
+<h2>Top Run Scorers</h2>
+
+<canvas id="runsChart"></canvas>
+
+<hr>
+
+<h2>Top Wicket Takers</h2>
+
+<canvas id="wicketsChart"></canvas>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+
+new Chart(
+document.getElementById('runsChart'),
+{
+    type:'bar',
+    data:{
+        labels:[
+            'Virat Kohli',
+            'Rohit Sharma',
+            'Shubman Gill',
+            'KL Rahul'
+        ],
+        datasets:[{
+            label:'Runs',
+            data:[
+                850,
+                790,
+                740,
+                680
+            ]
+        }]
+    }
+}
+);
+
+new Chart(
+document.getElementById('wicketsChart'),
+{
+    type:'bar',
+    data:{
+        labels:[
+            'Bumrah',
+            'Shami',
+            'Kuldeep',
+            'Arshdeep'
+        ],
+        datasets:[{
+            label:'Wickets',
+            data:[
+                27,
+                24,
+                22,
+                20
+            ]
+        }]
+    }
+}
+);
+
+</script>
+
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2>Edit Player</h2>
+
+<form
+method="POST"
+enctype="multipart/form-data">
+
+    {% csrf_token %}
+
+    {{ form.as_p }}
+
+    {% if player.player_image %}
+        <p>Current Image:</p>
+
+        <img
+        src="{{ player.player_image.url }}"
+        width="200">
+    {% endif %}
+
+    <br><br>
+
+    <button
+    type="submit"
+    class="btn btn-warning">
+
+        Update Player
+
+    </button>
+
+</form>
+
+{% endblock %}

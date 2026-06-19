@@ -1,0 +1,122 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <div class="card bg-dark text-white p-4">
+
+        <div class="row">
+
+            <div class="col-md-4">
+
+                {% if player.player_image %}
+
+                <img
+                src="{{ player.player_image.url }}"
+                class="img-fluid rounded">
+
+                {% endif %}
+
+            </div>
+
+            <div class="col-md-8">
+
+                <h1>{{ player.name }}</h1>
+
+                <hr>
+
+                <p><strong>Age:</strong> {{ player.age }}</p>
+
+                <p><strong>Team:</strong> {{ player.team }}</p>
+
+                <p><strong>Role:</strong> {{ player.role }}</p>
+
+                <p><strong>Batting Style:</strong> {{ player.batting_style }}</p>
+
+                <p><strong>Bowling Style:</strong> {{ player.bowling_style }}</p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <br>
+
+    <div class="row">
+
+        <div class="col-md-3">
+
+            <div class="card dashboard-card">
+                <h5>Matches</h5>
+                <h2>{{ player.matches }}</h2>
+            </div>
+
+        </div>
+
+        <div class="col-md-3">
+
+            <div class="card dashboard-card">
+                <h5>Runs</h5>
+                <h2>{{ player.runs }}</h2>
+            </div>
+
+        </div>
+
+        <div class="col-md-3">
+
+            <div class="card dashboard-card">
+                <h5>Wickets</h5>
+                <h2>{{ player.wickets }}</h2>
+            </div>
+
+        </div>
+
+        <div class="col-md-3">
+
+            <div class="card dashboard-card">
+                <h5>Average</h5>
+                <h2>{{ player.average }}</h2>
+            </div>
+
+        </div>
+
+    </div>
+
+    <br>
+
+    <div class="row">
+
+        <div class="col-md-4">
+
+            <div class="card dashboard-card">
+                <h5>Strike Rate</h5>
+                <h2>{{ player.strike_rate }}</h2>
+            </div>
+
+        </div>
+
+        <div class="col-md-4">
+
+            <div class="card dashboard-card">
+                <h5>100s</h5>
+                <h2>{{ player.hundreds }}</h2>
+            </div>
+
+        </div>
+
+        <div class="col-md-4">
+
+            <div class="card dashboard-card">
+                <h5>50s</h5>
+                <h2>{{ player.fifties }}</h2>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

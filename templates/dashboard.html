@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Dashboard</h1>
+
+<div class="row">
+
+    <div class="col-md-3">
+        <div class="card dashboard-card">
+            <h4>Total Players</h4>
+            <h2>{{ total_players }}</h2>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card dashboard-card">
+            <h4>Total Matches</h4>
+            <h2>{{ total_matches }}</h2>
+        </div>
+    </div>
+
+</div>
+
+<hr>
+
+<h2>🏏 Live Matches</h2>
+
+{% for match in live_matches %}
+
+<div style="
+background:#111827;
+padding:15px;
+margin-bottom:15px;
+border-radius:10px;
+">
+
+    <h3>
+
+        {{ match.matchInfo.team1.teamSName }}
+
+        VS
+
+        {{ match.matchInfo.team2.teamSName }}
+
+    </h3>
+
+    <p>
+
+        {{ match.matchInfo.status }}
+
+    </p>
+
+</div>
+
+{% endfor %}
+
+{% endblock %}

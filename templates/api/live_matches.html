@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>🏏 Live Cricket Matches</h1>
+
+<hr>
+
+{% for match in matches %}
+
+<div style="
+background:#111827;
+padding:20px;
+margin-bottom:20px;
+border-radius:15px;
+">
+
+    <a href="{% url 'match_detail' match.id %}" style="text-decoration:none;color:white;">
+    <h2>
+        {{ match.teamInfo.0.shortname }}
+        VS
+        {{ match.teamInfo.1.shortname }}
+    </h2>
+    </a>
+
+    <p>
+    <strong>Match ID:</strong>
+    {{ match.id }}
+</p>
+
+    <p>
+        <strong>Match ID:</strong>
+        {{ match.id }}
+    </p>
+
+    <p>
+
+        <strong>Series:</strong>
+
+        {{ match.series }}
+
+    </p>
+
+    <p>
+
+        <strong>Status:</strong>
+
+        {{ match.status }}
+
+    </p>
+
+    <p>
+
+        <strong>Venue:</strong>
+
+        {{ match.venue }}
+
+    </p>
+
+    <p>
+
+        <strong>Date:</strong>
+
+        {{ match.date }}
+
+    </p>
+
+    {% if match.score %}
+
+    <hr>
+
+    <h3>📊 Scoreboard</h3>
+
+    {% for inning in match.score %}
+
+    <div style="
+    background:#1f2937;
+    padding:15px;
+    margin-top:10px;
+    border-radius:10px;
+    ">
+
+        <h4>{{ inning.inning }}</h4>
+
+        <p>
+            <strong>Runs:</strong>
+            {{ inning.r }}/{{ inning.w }}
+        </p>
+
+        <p>
+            <strong>Overs:</strong>
+            {{ inning.o }}
+        </p>
+
+    </div>
+
+    {% endfor %}
+
+    {% endif %}
+
+</div>
+
+{% empty %}
+
+<h3>No Live Matches Found</h3>
+
+{% endfor %}
+
+{% endblock %}

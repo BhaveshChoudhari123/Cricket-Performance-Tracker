@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>{{ team.name }}</h1>
+
+<h3>{{ team.country }}</h3>
+
+<hr>
+
+<h2>Statistics</h2>
+
+<p>Total Matches: {{ matches_played }}</p>
+
+<p>Wins: {{ wins }}</p>
+
+<p>Losses: {{ losses }}</p>
+
+<p>Win %: {{ win_percentage }}</p>
+
+<hr>
+
+<h2>Squad</h2>
+
+{% for player in players %}
+
+<div class="card">
+
+    <h3>
+        <a href="{% url 'player_profile' player.id %}">
+            {{ player.name }}
+        </a>
+    </h3>
+
+    <p>{{ player.role }}</p>
+
+</div>
+
+{% empty %}
+
+<p>No players added.</p>
+
+{% endfor %}
+
+{% endblock %}
