@@ -2,7 +2,7 @@
 
 A Django-based Cricket Analytics Platform.
 
-## Features
+## Features:
 
 - Live Cricket Matches
 - Match Scorecards
