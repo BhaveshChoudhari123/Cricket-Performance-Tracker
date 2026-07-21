@@ -1,4 +1,4 @@
-# Cricket Performance Tracker:
+# Cricket Performance Tracker:-
 
 A Django-based Cricket Analytics Platform.
 
