@@ -13,7 +13,7 @@ A Django-based Cricket Analytics Platform.
 - Tournament Module
 - Analytics Dashboard
 
-## Tech Stack:-
+## Tech Stack:
 
 - Python
 - Django
